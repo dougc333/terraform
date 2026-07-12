@@ -1,0 +1,15 @@
+# Terraform downloads and state
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+
+# Local Kubernetes credentials
+**/.kubeconfig
+
+# Go build caches
+**/.cache/
+
+# macOS
+.DS_Store
