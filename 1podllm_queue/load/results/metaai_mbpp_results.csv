@@ -1,0 +1,14 @@
+task_id,function,verdict,reason
+88,freq_count,Correct,Counter(lst) matches all 3 test cases
+81,zip_tuples,Incorrect,zip truncates to shortest instead of cycling as tests expect
+42,find_Sum,Correct,Sum of counts > 1 matches test logic for repeated elements
+29,get_Odd_Occurrence,Correct,"Returns first element with odd occurrence, passes tests"
+80,tetrahedral_number,Correct,Formula n*(n+1)*(n+2)//6 matches tests
+29,get_Odd_Occurrence,Correct,"Uses next() for odd occurrence, passes tests"
+58,opposite_Signs,Incorrect,"Misses case where a<0 and b>0, fails general case"
+46,test_distinct,Correct,len(nums)==len(set(nums)) passes all tests
+75,find_tuples,Incorrect,Returns list but tests expect string representation
+15,split_lowerstring,Incorrect,Returns only lowercase chars instead of split segments
+62,smallest_num,Correct,min(nums) passes all tests
+24,binary_to_decimal,Correct,"int(binary, 2) matches all test cases"
+90,len_log,Correct,max of word lengths matches tests

@@ -1,0 +1,38 @@
+
+
+cd /Users/dc/terraform/1podllm_queue
+export KUBECONFIG=/Users/dc/terraform/1pod_llm/.kubeconfig
+export KIND=/Users/dc/terraform/1pod_llm/.bin/kind
+./scripts/01-deploy-llama.sh
+
+
+
+show 1_>2 then 2->1 cap pods to 2
+
+kubectl -n llm-autoscaling patch hpa llama-server \
+  --type merge \
+  -p '{"spec":{"minReplicas":1,"maxReplicas":2}}'
+
+Terminal 1: port forward
+cd /Users/dc/terraform/1podllm_queue
+./scripts/02-port-forward-llama.sh
+
+
+Terminal 2: queue depth
+cd /Users/dc/terraform/1podllm_queue
+./scripts/04-watch-queue.sh
+
+
+Terminal 3: scaling and queue output
+cd /Users/dc/terraform/1podllm_queue
+export KUBECONFIG=/Users/dc/terraform/1pod_llm/.kubeconfig
+./scripts/04-watch-scaling.sh
+
+
+
+
+Terminal 4: load traffic
+cd /Users/dc/terraform/1podllm_queue
+RESULTS_FILE=load/results/my-run.jsonl \
+WORKERS=12 DURATION=300 \
+./scripts/03-run-mbpp-load.sh

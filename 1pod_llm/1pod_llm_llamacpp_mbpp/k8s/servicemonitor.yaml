@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: llama-server
+  namespace: llm-autoscaling
+  labels:
+    release: monitoring
+spec:
+  namespaceSelector:
+    matchNames:
+      - llm-autoscaling
+  selector:
+    matchLabels:
+      app: llama-server
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 5s
+      scrapeTimeout: 4s

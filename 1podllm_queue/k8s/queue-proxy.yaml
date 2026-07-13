@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: llama-queue
+  namespace: llm-autoscaling
+  labels:
+    app: llama-queue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: llama-queue
+  template:
+    metadata:
+      labels:
+        app: llama-queue
+    spec:
+      containers:
+        - name: queue-proxy
+          image: local/llama-queue-proxy:dev
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: LLAMA_URL
+              value: http://llama-server:8080
+            - name: QUEUE_WORKERS
+              value: "2"
+            - name: QUEUE_CAPACITY
+              value: "100"
+            - name: LLAMA_TIMEOUT
+              value: 5m
+          ports:
+            - name: http
+              containerPort: 8080
+          resources:
+            requests:
+              cpu: 25m
+              memory: 32Mi
+            limits:
+              cpu: 250m
+              memory: 128Mi
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 3
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: llama-queue
+  namespace: llm-autoscaling
+  labels:
+    app: llama-queue
+spec:
+  selector:
+    app: llama-queue
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: llama-queue
+  namespace: llm-autoscaling
+  labels:
+    release: monitoring
+spec:
+  namespaceSelector:
+    matchNames:
+      - llm-autoscaling
+  selector:
+    matchLabels:
+      app: llama-queue
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 5s
+      scrapeTimeout: 4s

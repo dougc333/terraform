@@ -1,0 +1,6 @@
+moviepy>=2.0.0
+pandas
+matplotlib
+pygments
+pillow
+numpy

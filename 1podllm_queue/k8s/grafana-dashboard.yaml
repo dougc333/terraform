@@ -1,0 +1,166 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: llama-mbpp-grafana-dashboard
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1"
+data:
+  llama-mbpp-hpa.json: |
+    {
+      "annotations": {
+        "list": []
+      },
+      "editable": true,
+      "graphTooltip": 1,
+      "refresh": "5s",
+      "schemaVersion": 39,
+      "tags": [
+        "llama.cpp",
+        "qwen",
+        "hpa",
+        "mbpp"
+      ],
+      "templating": {
+        "list": []
+      },
+      "time": {
+        "from": "now-30m",
+        "to": "now"
+      },
+      "timezone": "browser",
+      "title": "llama.cpp Qwen MBPP Autoscaling",
+      "uid": "llamacpp-mbpp-hpa",
+      "version": 1,
+      "panels": [
+        {
+          "type": "timeseries",
+          "title": "Llama pods: desired vs available",
+          "id": 1,
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 0
+          },
+          "targets": [
+            {
+              "expr": "kube_deployment_spec_replicas{namespace=\"llm-autoscaling\",deployment=\"llama-server\"}",
+              "legendFormat": "Desired"
+            },
+            {
+              "expr": "kube_deployment_status_replicas_available{namespace=\"llm-autoscaling\",deployment=\"llama-server\"}",
+              "legendFormat": "Available"
+            }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "HPA replicas",
+          "id": 2,
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 0
+          },
+          "targets": [
+            {
+              "expr": "kube_horizontalpodautoscaler_status_current_replicas{namespace=\"llm-autoscaling\",horizontalpodautoscaler=\"llama-server\"}",
+              "legendFormat": "Current"
+            },
+            {
+              "expr": "kube_horizontalpodautoscaler_status_desired_replicas{namespace=\"llm-autoscaling\",horizontalpodautoscaler=\"llama-server\"}",
+              "legendFormat": "Desired"
+            },
+            {
+              "expr": "kube_horizontalpodautoscaler_spec_max_replicas{namespace=\"llm-autoscaling\",horizontalpodautoscaler=\"llama-server\"}",
+              "legendFormat": "Maximum"
+            }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "CPU used by llama.cpp pods",
+          "id": 3,
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 8
+          },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "cores"
+            }
+          },
+          "targets": [
+            {
+              "expr": "sum by (pod) (rate(container_cpu_usage_seconds_total{namespace=\"llm-autoscaling\",container=\"llama-server\"}[1m]))",
+              "legendFormat": "{{pod}}"
+            }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "llama.cpp generated tokens per second",
+          "id": 4,
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 8
+          },
+          "targets": [
+            {
+              "expr": "sum(rate(llamacpp:tokens_predicted_total{namespace=\"llm-autoscaling\"}[1m]))",
+              "legendFormat": "Generated tokens/s"
+            }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "Mean request processing time",
+          "id": 5,
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 16
+          },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "s"
+            }
+          },
+          "targets": [
+            {
+              "expr": "sum(rate(llamacpp:requests_processing_seconds_sum{namespace=\"llm-autoscaling\"}[1m])) / clamp_min(sum(rate(llamacpp:requests_processing_seconds_count{namespace=\"llm-autoscaling\"}[1m])), 0.001)",
+              "legendFormat": "Mean seconds"
+            }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "Pod memory",
+          "id": 6,
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 16
+          },
+          "fieldConfig": {
+            "defaults": {
+              "unit": "bytes"
+            }
+          },
+          "targets": [
+            {
+              "expr": "sum by (pod) (container_memory_working_set_bytes{namespace=\"llm-autoscaling\",container=\"llama-server\"})",
+              "legendFormat": "{{pod}}"
+            }
+          ]
+        }
+      ]
+    }

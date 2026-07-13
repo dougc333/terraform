@@ -1,0 +1,58 @@
+task_id,function,verdict,reason,why_it_fails,generated_code,fixed_code
+88,freq_count,Correct,Counter(lst) matches all 3 test cases,N/A - passes all tests,"from collections import Counter
+
+def freq_count(lst):
+    return Counter(lst)",N/A - already correct
+81,zip_tuples,Incorrect,zip truncates to shortest instead of cycling as tests expect,"zip() stops at shortest iterable. Test expects cycling: (7,8,4,5,9,10),(1,5,6) should return 6 pairs but code returns only 3: [(7,1),(8,5),(4,6)]","def zip_tuples(tup1, tup2):
+    return [(a, b) for a, b in zip(tup1, tup2)]","from itertools import cycle
+
+def zip_tuples(tup1, tup2):
+    if len(tup2) == 0: return []
+    return [(a, b) for a, b in zip(tup1, cycle(tup2))]"
+42,find_Sum,Correct,Sum of counts > 1 matches test logic for repeated elements,N/A - passes all tests,"from collections import Counter
+
+def find_Sum(arr, target):
+    counts = Counter(arr)
+    return sum(count for count in counts.values() if count > 1)",N/A - already correct
+29,get_Odd_Occurrence,Correct,"Returns first element with odd occurrence, passes tests",N/A - passes all tests,"from collections import Counter
+
+def get_Odd_Occurrence(arr, target):
+    counts = Counter(arr)
+    odd_occurrence = [element for element, count in counts.items() if count % 2 != 0]
+    return odd_occurrence[0]",N/A - already correct
+80,tetrahedral_number,Correct,Formula n*(n+1)*(n+2)//6 matches tests,N/A - passes all tests,"def tetrahedral_number(n):
+    return (n * (n + 1) * (n + 2)) // 6",N/A - already correct
+29,get_Odd_Occurrence,Correct,"Uses next() for odd occurrence, passes tests",N/A - passes all tests,"from collections import Counter
+
+def get_Odd_Occurrence(arr, target):
+    counts = Counter(arr)
+    odd_occurrence = next((element for element, count in counts.items() if count % 2 != 0), None)
+    return odd_occurrence",N/A - already correct
+58,opposite_Signs,Incorrect,"Misses case where a<0 and b>0, fails general case","Returns True when both positive: a>0 and b>0. Also misses a<0 and b>0 case. opposite_Signs(-1,2) should be True but returns False","def opposite_Signs(a, b):
+    if a > 0 and b > 0:
+        return True
+    elif a > 0 and b < 0:
+        return True
+    else:
+        return False","def opposite_Signs(a, b):
+    return (a > 0 and b < 0) or (a < 0 and b > 0)"
+46,test_distinct,Correct,len(nums)==len(set(nums)) passes all tests,N/A - passes all tests,"def test_distinct(nums):
+    return len(nums) == len(set(nums))",N/A - already correct
+75,find_tuples,Incorrect,Returns list but tests expect string representation,"Tests assert == '[(6, 24, 12)]' with quotes. Code returns list [(6,24,12)]. In Python list != string, so AssertionError","def find_tuples(tuples_list, k):
+    return [t for t in tuples_list if all(t[i] % k == 0 for i in range(len(t)))]","def find_tuples(tuples_list, k):
+    result = [t for t in tuples_list if all(x % k == 0 for x in t)]
+    return str(result)"
+15,split_lowerstring,Incorrect,Returns only lowercase chars instead of split segments,"For 'AbCd' test expects ['bC','d'] but code returns ['b','d']. It filters chars instead of splitting at lowercase boundaries","def split_lowerstring(s):
+    return [char for char in s if char.islower()]","import re
+
+def split_lowerstring(s):
+    parts = re.split(r'[a-z]', s)
+    return [p for p in parts[1:] if p]"
+62,smallest_num,Correct,min(nums) passes all tests,N/A - passes all tests,"def smallest_num(nums):
+    return min(nums)",N/A - already correct
+24,binary_to_decimal,Correct,"int(binary, 2) matches all test cases",N/A - passes all tests,"def binary_to_decimal(binary):
+    decimal = int(binary, 2)
+    return decimal",N/A - already correct
+90,len_log,Correct,max of word lengths matches tests,N/A - passes all tests,"def len_log(words):
+    lengths = [len(word) for word in words]
+    return max(lengths)",N/A - already correct

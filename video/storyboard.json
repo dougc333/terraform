@@ -1,0 +1,50 @@
+[
+  {
+    "type": "title",
+    "duration": 3,
+    "text": "MBPP Results: Qwen2.5-0.5B",
+    "background_color": [
+      15,
+      15,
+      35
+    ],
+    "font_size": 80
+  },
+  {
+    "type": "text",
+    "duration": 4,
+    "text": "13 coding tasks tested\\n9 Correct | 4 Incorrect",
+    "font_size": 65,
+    "position": "center"
+  },
+  {
+    "type": "csv_table",
+    "duration": 8,
+    "csv": "mbpp_analysis_full.csv",
+    "rows": 6,
+    "title": "Summary of Results",
+    "highlight_col": "verdict",
+    "highlight_val": "Incorrect"
+  },
+  {
+    "type": "code",
+    "duration": 6,
+    "code": "def zip_tuples(tup1, tup2):\\n    return [(a, b) for a, b in zip(tup1, tup2)]",
+    "language": "python",
+    "title": "Task 81: Incorrect - zip() truncates"
+  },
+  {
+    "type": "code",
+    "duration": 6,
+    "code": "from itertools import cycle\\n\\ndef zip_tuples(tup1, tup2):\\n    if len(tup2) == 0: return []\\n    return [(a, b) for a, b in zip(tup1, cycle(tup2))]",
+    "language": "python",
+    "title": "Task 81: Fixed - use itertools.cycle"
+  },
+  {
+    "type": "text",
+    "duration": 3,
+    "text": "Full code + CSV on GitHub\\nSubscribe for more AI evals",
+    "font_size": 55,
+    "position": "center"
+  }
+]

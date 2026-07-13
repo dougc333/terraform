@@ -1,0 +1,7 @@
+.terraform/
+.bin/
+.cache/
+.kubeconfig
+terraform.tfstate
+terraform.tfstate.*
+results/

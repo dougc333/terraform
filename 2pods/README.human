@@ -1,0 +1,25 @@
+1. docker info #verifies docker desktop running
+2. cd ~2pods
+   ./scripts/setup.sh
+3.  Terminan 1:
+    KUBECONFIG=.kubeconfig kubectl get pods --all-namespaces 
+    KUBECONFIG=.kubeconfig kubectl get hpa --namespace web-autoscaling
+
+    Terminal 2: 
+    cd /Users/dc/terraform/2pods
+
+    KUBECONFIG=.kubeconfig kubectl get hpa web --namespace web-autoscaling --watch
+
+4.  Terminal 3:
+    cd /Users/dc/terraform/2pods
+
+    KUBECONFIG=.kubeconfig kubectl get pods --namespace web-autoscaling --watch
+
+5.  Terminal 1: 
+    cd /Users/dc/terraform/2pods
+    ./scripts/run-hpa-test.sh
+
+  after tests finished and verify ramp up and down
+./scripts/destroy.sh
+ cleanup docker images
+
