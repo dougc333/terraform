@@ -1,0 +1,161 @@
+[
+  {
+    "type": "text",
+    "duration": 5,
+    "text": "Kubernetes, llama.cpp, mbpp benchmark",
+    "background_color": [
+      15,
+      15,
+      35
+    ],
+    "font_size": 80,
+    "voiceover":"The demos are used to convince hiring managers you can start out without 5y of experience which is defniitely possible given how good the LLMs are at generating code. "
+  },
+  {
+    "text": "Start small",
+    "background_color": [
+      15,
+      15,
+      35
+    ],
+    "font_size": 80,
+    "type": "image",
+    "duration": 8,
+    "src": "demo2.png",
+    "voiceover":" Start small with 1 go lang hello world server. Start with the simplest python load script. Configure prometheus and grafana to show metrics and dashboards. NO scaling yet, no GPUs, no LLM models everything runs locally on a single macbook. My example isn't 1% complete. The LLM generated the code. The benefit is the code works and you can do experiments on the internals and practice understanding how things work and get to a higher competence wo 5y of experience.  "
+  },
+  { 
+    "background_color": [
+      15,
+      15,
+      35
+    ],
+    "font_size": 80,
+    "type": "image",
+    "duration": 10,
+    "src": "demo2.png",
+    "voiceover":"Add autoscaling, Run on the CPU locally on the macbook.   "
+  },
+  {
+    "background_color": [
+      15,
+      15,
+      35
+    ],
+    "font_size": 80,
+    "type": "image",
+    "duration": 20,
+    "src": "demo3.png",
+    "voiceover":"Add llama.cpp, Gwen-0.5, and a FIFO queue.  Add a queue or a pubsub to buffer requests. Send requests from the simplest python coding benchmark and record correct/incorrect results. The low rate of success is expected because of how small the model is. This is still ground zero and we need to include a configuration for training and increased automation. The expectation is 1 person can administer and manage multiple cluster users. Infinte monitoring, load balancing, scaling, routing requests,... "
+  },
+  {
+    "background_color": [
+      15,
+      15,
+      35
+    ],
+    "font_size": 80,
+    "type": "image",
+    "duration": 30,
+    "src": "kunchen3.png",
+    "voiceover":"From Kun Chen, this graph shows the increasing trend of AI driven job displacement. The blue line is the number of jobs lost due to AI, while the red line is the number of jobs created by AI. The gap between the two lines is widening, indicating that more jobs are being lost than created. This trend is expected to continue maybe for a few years. That being said the reverse is true also, The demand for AI Engineers has never been higher. Next we look at an example."
+  },
+  {
+    "type": "image",
+    "duration": 5,
+    "background_color": [
+      15,
+      15,
+      35
+    ],
+    "url": "https://example.com",
+    "src": "pika1.png",
+    "font_size": 80,
+    "voiceover":"pika just got 80M for headcount expansion and GPUs.  "
+  },
+  {
+    "type": "image",
+    "duration": 5,
+    "background_color": [
+      15,
+      15,
+      35
+    ],
+    "url": "https://jobs.ashbyhq.com/pika/35eb68a1-c26b-4221-80e6-51e21ec8edd9",
+    "src": "pika2.png",
+    "font_size": 80,
+    "voiceover":"pika  "
+  },
+    {
+    "type": "image",
+    "duration": 5,
+    "background_color": [
+      15,
+      15,
+      35
+    ],
+    "url": "https://jobs.ashbyhq.com/pika/35eb68a1-c26b-4221-80e6-51e21ec8edd9",
+    "src": "pika3.png",
+    "font_size": 80,
+    "voiceover":"Lets go through each bullet point in the job description and create a starting demo we can build on. Design, develop and maintain scalable GPU infra for training and serving. Start with a scalable web server, swap out the webserver for a LLM running on CPU. "
+  },
+    {
+    "type": "image",
+    "duration": 5,
+    "background_color": [
+      15,
+      15,
+      35
+    ],
+    "url": "https://jobs.ashbyhq.com/pika/35eb68a1-c26b-4221-80e6-51e21ec8edd9",
+    "src": "pika4.png",
+    "font_size": 80,
+    "voiceover":"Lets skip this until we get more people onboarded and learning on their own  "
+  },
+  {
+    "type": "image",
+    "duration": 10,
+    "position": "center",
+    "background_color": [
+      15,
+      15,
+      35
+    ],
+     "src": "demo1.png",
+    "voiceover":"pod1 is a single webserver with prometheus and grafana attached. "
+  },
+    {
+    "type": "image",
+    "duration": 10,
+    "position": "center",
+    "background_color": [
+      15,
+      15,
+      35
+    ],
+     "src": "demo2.png",
+    "voiceover":"pod2 autoscale go web server pod with prometheus and grafana. The later demos switch the web server for a LLM and run a python benchmark. The Qwen-0.5 model is the smallest model that can run on a macbook CPU.  "
+  },
+  {
+    "type": "image",
+    "duration": 10,
+    "position": "center",
+    "background_color": [
+      15,
+      15,
+      35
+    ],
+     "src": "demo3.png",
+    "voiceover":"This is a demo of a very small LLM system running on locally on a macbook. Incoming USER queries are aggragated into FIFO queue. This should be a pub/sub system to support multiple users but since we have 1 user we simplify with a FIFO.  The requests are a set of 13 basic python coding questions. There are over 100 questions on the dataset.  The success rate is 9/13 is expected because this is a 500m parameter Qwen model.  The background window shows the prometheus metrics and grafana dashboards. This code is 100% generated by chatGPT. This is an example to show how different things are. I understand zero percent of this codebase for now and over the next couple meetups we can build up. "
+  },
+  {
+    "type": "csv_table",
+    "duration": 8,
+    "csv": "mbpp_analysis_full.csv",
+    "rows": 6,
+    "title": "Summary of Results",
+    "highlight_col": "verdict",
+    "highlight_val": "Incorrect",
+    "voiceover":"From the MBPP benchmark, 13 coding tasks tested\\n9 Correct | 4 Incorrect"
+  },
+]
