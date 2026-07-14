@@ -1,8 +1,8 @@
 [
   {
-    "type": "title",
+    "type": "text",
     "duration": 3,
-    "text": "MBPP Results: Qwen2.5-0.5B",
+    "text": "Jobs in postLLM world",
     "background_color": [
       15,
       15,
@@ -10,6 +10,51 @@
     ],
     "font_size": 80
   },
+  {
+    "type": "text",
+    "duration": 3,
+    "text": "All API programming have been impacted",
+    "background_color": [
+      15,
+      15,
+      35
+    ],
+    "font_size": 80
+  },
+  {
+    "type": "text",
+    "duration": 3,
+    "text": "PreLLM The EM needs to do recruiting, project management, and performance review",
+    "background_color": [
+      15,
+      15,
+      35
+    ],
+    "font_size": 80
+  },
+    {
+    "type": "text",
+    "duration": 3,
+    "text": "PostLLM The IC works with a multiconfig setup and 12 ICs are no longer required to support the same product. Lets assume 2 ICs withe Agents and LLMS can do teh work of 12 in the past. Now we don't need 12 ICs and we dont need the EM since AI doesnt need performance reviews or recruiting. ",
+    "background_color": [
+      15,
+      15,
+      35
+    ],
+    "font_size": 80
+  },
+  {
+    "type": "text",
+    "duration": 3,
+    "text": "We are going to focus on this example to drive our demos, the AI Infra job",
+    "background_color": [
+      15,
+      15,
+      35
+    ],
+    "font_size": 80
+  },
+    
   {
     "type": "text",
     "duration": 4,
