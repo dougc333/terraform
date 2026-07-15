@@ -2,9 +2,13 @@ package main
 
 import (
 	"fmt"
+	"io/fs"
 	"log"
 	"net/http"
+	"os"
+	"path"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/prometheus/client_golang/prometheus"
@@ -48,13 +52,27 @@ func init() {
 		workCount,
 	)
 }
+
 func main() {
+	uiDir := os.Getenv("UI_DIST_DIR")
+	if uiDir == "" {
+		uiDir = "/ui"
+	}
+
+	server := newServer(os.DirFS(uiDir))
+
+	log.Println("web server listening on :8080")
+	log.Fatal(server.ListenAndServe())
+}
+
+func newServer(uiAssets fs.FS) *http.Server {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", handleWeb)
+	mux.HandleFunc("/", rootHandler(uiAssets))
+	mux.HandleFunc("/api/work", handleWork)
 	mux.HandleFunc("/healthz", handleHealth)
 	mux.Handle("/metrics", promhttp.Handler())
 
-	server := &http.Server{
+	return &http.Server{
 		Addr:              ":8080",
 		Handler:           mux,
 		ReadHeaderTimeout: 3 * time.Second,
@@ -62,18 +80,32 @@ func main() {
 		WriteTimeout:      10 * time.Second,
 		IdleTimeout:       30 * time.Second,
 	}
-
-	log.Println("web server listening on :8080")
-	log.Fatal(server.ListenAndServe())
 }
 
-func handleWeb(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/" {
-		errorCount.Inc()
-		http.NotFound(w, r)
-		return
-	}
+func rootHandler(uiAssets fs.FS) http.HandlerFunc {
+	files := http.FileServer(http.FS(uiAssets))
 
+	return func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path == "/" && r.URL.Query().Has("work") {
+			handleWork(w, r)
+			return
+		}
+
+		assetPath := strings.TrimPrefix(path.Clean(r.URL.Path), "/")
+		if assetPath == "." {
+			assetPath = "index.html"
+		}
+		if _, err := fs.Stat(uiAssets, assetPath); err != nil {
+			errorCount.Inc()
+			http.NotFound(w, r)
+			return
+		}
+
+		files.ServeHTTP(w, r)
+	}
+}
+
+func handleWork(w http.ResponseWriter, r *http.Request) {
 	started := time.Now()
 
 	inFlight.Inc()

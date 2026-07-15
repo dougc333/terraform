@@ -50,6 +50,7 @@ kubectl wait \
 
 echo
 echo "Lab is ready."
+echo "Open the web lab: $ROOT/scripts/web-ui.sh"
 echo "Run: $ROOT/scripts/load-test.sh"
 echo "Run in another terminal: $ROOT/scripts/prometheus-ui.sh"
 echo "Or open the full dashboard: $ROOT/scripts/grafana-ui.sh"
