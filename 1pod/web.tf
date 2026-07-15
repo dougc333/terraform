@@ -5,10 +5,19 @@ locals {
     "app.kubernetes.io/managed-by" = "terraform"
   }
 
+  web_source_files = sort(tolist(setunion(
+    fileset("${path.module}/app", "*.go"),
+    fileset("${path.module}/app", "go.*"),
+    fileset("${path.module}/app", "Dockerfile"),
+    fileset("${path.module}/app", ".dockerignore"),
+    fileset("${path.module}/app", "ui/*.json"),
+    fileset("${path.module}/app", "ui/*.ts"),
+    fileset("${path.module}/app", "ui/*.html"),
+    fileset("${path.module}/app", "ui/src/**"),
+  )))
+
   web_source_hash = sha256(join("", [
-    filesha256("${path.module}/app/main.go"),
-    filesha256("${path.module}/app/go.mod"),
-    filesha256("${path.module}/app/Dockerfile"),
+    for filename in local.web_source_files : filesha256("${path.module}/app/${filename}")
   ]))
 }
 

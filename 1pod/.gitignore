@@ -5,3 +5,6 @@ terraform.tfstate.*
 .bin/
 .cache/
 *.log
+app/ui/node_modules/
+app/ui/dist/
+app/ui/*.tsbuildinfo
