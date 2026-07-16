@@ -1,7 +1,6 @@
 .terraform/
 .kubeconfig
-kind-state-backup/
 *.tfstate
 *.tfstate.*
+terraform.tfvars
 crash.log
-*.tfplan

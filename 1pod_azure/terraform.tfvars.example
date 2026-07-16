@@ -1,0 +1,7 @@
+# Copy this file to terraform.tfvars only if you want to override defaults.
+# setup.sh obtains subscription_id from the active Azure CLI account.
+
+location            = "westus3"
+resource_group_name = "one-pod-azure-lab-rg"
+cluster_name        = "one-pod-azure-lab"
+node_vm_size        = "Standard_D4as_v5"

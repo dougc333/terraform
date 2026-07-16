@@ -2,14 +2,13 @@ terraform {
   required_version = ">= 1.6"
 
   backend "local" {
-    # Keep this GCP lab isolated from the copied kind state files.
-    path = "terraform-gcp.tfstate"
+    path = "terraform-azure.tfstate"
   }
 
   required_providers {
-    google = {
-      source  = "hashicorp/google"
-      version = "~> 7.0"
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 4.0"
     }
 
     kubernetes = {
@@ -18,3 +17,4 @@ terraform {
     }
   }
 }
+
