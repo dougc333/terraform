@@ -1,6 +1,0 @@
-.terraform/
-.kubeconfig
-*.tfstate
-*.tfstate.*
-terraform.tfvars
-crash.log
